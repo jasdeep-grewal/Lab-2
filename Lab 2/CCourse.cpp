@@ -104,20 +104,63 @@ void CCourse::saveStudent() {
 	cin >> saveName;
 	ofstream outfile(saveName);
 	for (int i = 0; i < students.size(); i++) {
-		outfile << this->students[i].getstudent_number() << " " << this->students[i].getlab() << " ";
-		outfile << this->students[i].getquiz() << " " << this->students[i].getmidterm() << " ";
+		outfile << this->students[i].getstudent_number() << "," << this->students[i].getlab() << ",";
+		outfile << this->students[i].getquiz() << "," << this->students[i].getmidterm() << ",";
 		outfile << this->students[i].getfinal_exam() << "\n";
 }
-
+	cout << "\nFile saved!\n";
 	outfile.close();
+}
 
+void CCourse::loadStudent() {
+	cout << "\nName of load file: ";
+	string fileName;
+	string data;
+	cin >> fileName;
+	ifstream infile(fileName);
+
+	CStudent student;
+	
+	if (infile.is_open())
+	{
+		while (getline(infile, data))
+		{
+			student.setstudent_number(data.substr(0, data.find(",")));
+
+			data.erase(0, data.find(",") + 1);
+
+			student.setlab(stof(data.substr(0, data.find(","))));
+
+			data.erase(0, data.find(",") + 1);
+
+			student.setquiz(stof(data.substr(0, data.find(","))));
+
+			data.erase(0, data.find(",") + 1);
+
+			student.setmidterm(stof(data.substr(0, data.find(","))));
+
+			data.erase(0, data.find(",") + 1);
+
+			student.setfinal_exam(stof(data));
+
+			students.push_back(student);
+		}
+	}
+	
+	cout << "\nFile loaded!\n";
+	infile.close();
 }
 
 bool CCourse::getStudentInfo(CStudent &student) {
 	string studentNum;
 	cout << "Student Number: ";
 
-	cin >> studentNum;
+	cin.clear();
+	cin.ignore();
+
+	//cin >> studentNum;
+	getline(cin, studentNum, '\n');
+	studentNum = trim(studentNum);
 
 	if (toupper(studentNum.at(0)) != 'A') {
 		cout << "\nInvalid Student Number" << endl;
@@ -139,33 +182,96 @@ bool CCourse::getStudentInfo(CStudent &student) {
 		}
 	}
 	studentNum.at(0) = toupper(studentNum.at(0));
+	student.setstudent_number(studentNum);
 
-	float labMark;
-	cout << "Lab Grade: ";
-	cin >> labMark;
+	float labMark = getValidFloat("Lab Grade", 0, 100);
+	student.setlab(labMark);
 
-	float quizMark;
-	cout << "Quiz Grade: ";
-	cin >> quizMark;
+	float quizMark = getValidFloat("Quiz Grade", 0, 100);
+	student.setquiz(quizMark);
 
-	float midtermMark;
-	cout << "Midterm Grade: ";
-	cin >> midtermMark;
+	float midtermMark = getValidFloat("Midterm Grade", 0, 100);
+	student.setmidterm(midtermMark);
 
-	float final_examMark;
-	cout << "Final Exam Grade: ";
-	cin >> final_examMark;
+	float final_examMark = getValidFloat("Final Exam Grade", 0, 100);
+	student.setfinal_exam(final_examMark);
+	
+	return true;
+}
+bool CCourse::isFloat(string number)
+{
+	int decCount = 0;
 
-	if ((labMark < 0) || (quizMark < 0) || (midtermMark < 0) || (final_examMark < 0) || (labMark > 100) || (quizMark > 100) || (midtermMark > 100) || (final_examMark > 100)) {
-		cout << "\nEntered values are incorrect!";
+	// check if string is blank
+	if (number == "")
 		return false;
+
+	// check if string is contains any chanrater other than "0123456789."
+	for (int i = 0; i < number.size(); i++)
+	{
+		if (!(isdigit(number[i]) || number[i] == '.'))
+			return false;
+
+		if (number[i] == '.')
+			decCount++;
 	}
 
-	student.setstudent_number(studentNum);
-	student.setlab(labMark);
-	student.setquiz(quizMark);
-	student.setmidterm(midtermMark);
-	student.setfinal_exam(final_examMark);
+	// check if decimal pointed more tha once
+	if (decCount > 1)
+		return false;
 
+	// else must be valid float
 	return true;
+}
+
+string CCourse::trim(string myString)
+{
+	// if blank string return as is
+	if (myString == "")
+		return myString;
+
+	//Trim leading spaces
+	while (myString.at(0) == ' ') {
+		myString.erase(0, 1);
+	}
+
+	//Trim trailing spaces
+	while (myString.at(myString.size() - 1) == ' ') {
+		myString.erase((myString.size() - 1), 1);
+	}
+
+	return myString;
+}
+
+float CCourse::getValidFloat(string inputDescription, float min, float max)
+{
+	float marks;
+	string number;
+
+	bool success = true;
+
+	do {
+		cout << inputDescription << ": ";
+		getline(cin, number, '\n');
+		number = trim(number);
+
+		if (!isFloat(number))
+		{
+			cout << "\nError! Invalid input \n\n";
+			success = false;
+		}
+		else
+		{
+			marks = stof(number);
+			if (marks < min || marks > max) {
+				cout << "\nError! Out of Range input \n\n";
+				success = false;
+			}
+			else
+				success = true;
+		}
+
+	} while (!success);
+
+	return marks;
 }

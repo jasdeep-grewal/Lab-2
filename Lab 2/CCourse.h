@@ -19,6 +19,7 @@ class CCourse
 		void printStudent();
 		void deleteStudent();
 		void saveStudent();
+		void loadStudent();
 		bool getStudentInfo(CStudent &student);
 
 		void setvector(vector <CStudent> students);
@@ -26,4 +27,8 @@ class CCourse
 
 	private:
 		vector <CStudent> students;
+
+		bool isFloat(string number);
+		string trim(string myString);
+		float getValidFloat(string inputDescription, float min, float max);
 };
