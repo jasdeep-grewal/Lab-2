@@ -104,12 +104,12 @@ void CCourse::saveStudent() {
 	cin >> saveName;
 	ofstream outfile(saveName);
 	for (int i = 0; i < students.size(); i++) {
-		outfile << this->students[i].getstudent_number << " " << this->students[i].getlab << " ";
-		outfile << this->students[i].getquiz << " " << this->students[i].getmidterm << " ";
-		outfile << this->students[i].getfinal_exam << "\n";
+		outfile << this->students[i].getstudent_number() << " " << this->students[i].getlab() << " ";
+		outfile << this->students[i].getquiz() << " " << this->students[i].getmidterm() << " ";
+		outfile << this->students[i].getfinal_exam() << "\n";
 }
 
-	outfile.close;
+	outfile.close();
 
 }
 
