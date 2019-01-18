@@ -8,13 +8,44 @@
 #include <fstream>
 using namespace std;
 
-CStudent::CStudent(string student_number, float lab, float quiz, float midterm, float final_exam) 
-	{
-		CStudent::student_number = student_number;
-		CStudent::lab = lab;
-		CStudent::quiz = quiz;
-		CStudent::midterm = midterm;
-		CStudent::final_exam = final_exam;
+
+void CStudent::setstudent_number(string nstudent_number) {
+	student_number = nstudent_number;
+}
+string CStudent::getstudent_number() {
+	return student_number;
+}
+
+
+void CStudent::setlab(float nlab) {
+	lab = nlab;
+}
+float CStudent::getlab() {
+	return lab;
+}
+
+
+void CStudent::setquiz(float nquiz) {
+	quiz = nquiz;
+}
+float CStudent::getquiz() {
+	return quiz;
+}
+
+
+void CStudent::setmidterm(float nmidterm) {
+	midterm = nmidterm;
+}
+float CStudent::getmidterm() {
+	return midterm;
+}
+
+
+void CStudent::setfinal_exam(float nfinal_exam) {
+	final_exam = nfinal_exam;
+}
+float CStudent::getfinal_exam() {
+	return final_exam;
 };
 
 

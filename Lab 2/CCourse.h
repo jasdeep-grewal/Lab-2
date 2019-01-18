@@ -12,14 +12,18 @@ using namespace std;
 
 class CCourse
 {
-public:
-		CCourse(vector<CStudent> students);
+	public:
 
-		void addStudent(CStudent student);
-		void editStudent(CStudent student);
+		void addStudent();
+		void editStudent();
 		void printStudent();
 		void deleteStudent();
 		void saveStudent();
+		bool getStudentInfo(CStudent &student);
 
-		vector<CStudent> students;
+		void setvector(vector <CStudent> students);
+		vector<CStudent> getStudents();
+
+	private:
+		vector <CStudent> students;
 };

@@ -7,17 +7,31 @@
 #include <string>
 #include <iterator>
 #include <fstream>
-#include "CCourse.h"
+
 using namespace std;
 
 class CStudent
 {
-	public:
-		CStudent(string student_number, float lab, float quiz, float midterm, float final_exam);
-
+	private:
+		//CStudent(string student_number, float lab, float quiz, float midterm, float final_exam);
 		string student_number;
 		float lab;
 		float quiz;
 		float midterm;
 		float final_exam;	
+	public:
+		void setstudent_number(string nstudent_number);
+		string getstudent_number();
+
+		void setlab(float nlab);
+		float getlab();
+
+		void setquiz(float nquiz);
+		float getquiz();
+
+		void setmidterm(float nmidterm);
+		float getmidterm();
+
+		void setfinal_exam(float nfinal_exam);
+		float getfinal_exam();
 };
